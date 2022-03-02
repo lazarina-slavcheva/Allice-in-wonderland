@@ -1,0 +1,147 @@
+def left(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags):
+
+    if int(alice_position[1] - 1) >= 0:
+        if matrix[alice_position[0]][alice_position[1] - 1].isdigit():
+            tea_bags += int(matrix[alice_position[0]][alice_position[1] - 1])
+            matrix[alice_position[0]][alice_position[1] - 1] = "*"
+        elif matrix[alice_position[0]][alice_position[1] - 1] == ".":
+            matrix[alice_position[0]][alice_position[1] - 1] = "*"
+        elif matrix[alice_position[0]][alice_position[1] - 1] == "*":
+            pass
+        elif matrix[alice_position[0]][alice_position[1] - 1] == "R":
+            matrix[alice_position[0]][alice_position[1] - 1] = "*"
+            is_rabbit = True
+            print("Alice didn't make it to the tea party.")
+            return tea_bags, is_collected, is_rabbit == True, is_end
+    else:
+        is_end = True
+        print("Alice didn't make it to the tea party.")
+        return tea_bags, is_collected, is_rabbit, is_end == True
+    if tea_bags >= 10:
+        is_collected = True
+        print("She did it! She went to the party.")
+        return tea_bags, is_collected == True, is_rabbit, is_end
+
+    return tea_bags, is_collected, is_rabbit, is_end
+
+def right(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags):
+
+    if int(alice_position[1] + 1) <= len(matrix):
+        if matrix[alice_position[0]][alice_position[1] + 1].isdigit():
+            tea_bags += int(matrix[alice_position[0]][alice_position[1] + 1])
+            matrix[alice_position[0]][alice_position[1] + 1] = "*"
+        elif matrix[alice_position[0]][alice_position[1] + 1] == ".":
+            matrix[alice_position[0]][alice_position[1] + 1] = "*"
+        elif matrix[alice_position[0]][alice_position[1] + 1] == "*":
+            pass
+        elif matrix[alice_position[0]][alice_position[1] + 1] == "R":
+            matrix[alice_position[0]][alice_position[1] + 1] = "*"
+            is_rabbit = True
+            return tea_bags, is_collected, is_rabbit == True, is_end, "Alice didn't make it to the tea party."
+    else:
+        is_end = True
+        print("Alice didn't make it to the tea party.")
+        return tea_bags, is_collected, is_rabbit, is_end == True
+    if tea_bags >= 10:
+        is_collected = True
+        print("She did it! She went to the party.")
+        return tea_bags, is_collected == True, is_rabbit, is_end
+
+    return tea_bags, is_collected, is_rabbit, is_end
+
+def down(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags):
+
+    if int(alice_position[0] + 1) <= len(matrix):
+        if matrix[alice_position[0] + 1][alice_position[1]].isdigit():
+            tea_bags += int(matrix[alice_position[0] + 1][alice_position[1]])
+            matrix[alice_position[0] + 1][alice_position[1]] = "*"
+        elif matrix[alice_position[0] + 1][alice_position[1]] == ".":
+            matrix[alice_position[0] + 1][alice_position[1]] = "*"
+        elif matrix[alice_position[0] + 1][alice_position[1]] == "*":
+            pass
+        elif matrix[alice_position[0] + 1][alice_position[1]] == "R":
+            matrix[alice_position[0] + 1][alice_position[1]] = "*"
+            is_rabbit = True
+            print("Alice didn't make it to the tea party.")
+            return tea_bags, is_collected, is_rabbit == True, is_end
+    else:
+        is_end = True
+        print("Alice didn't make it to the tea party.")
+        return tea_bags, is_collected, is_rabbit, is_end == True
+    if tea_bags >= 10:
+        is_collected = True
+        print("She did it! She went to the party.")
+        return tea_bags, is_collected == True, is_rabbit, is_end
+    return tea_bags, is_collected, is_rabbit, is_end
+
+def up(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags):
+
+    if int(alice_position[0] - 1)>= 0:
+        if matrix[alice_position[0] - 1][alice_position[1]].isdigit():
+            tea_bags += int(matrix[alice_position[0] - 1][alice_position[1]])
+            matrix[alice_position[0] - 1][alice_position[1]] = "*"
+        elif matrix[alice_position[0] - 1][alice_position[1]] == ".":
+            matrix[alice_position[0] - 1][alice_position[1]] = "*"
+        elif matrix[alice_position[0] - 1][alice_position[1]] == "*":
+            pass
+        elif matrix[alice_position[0] - 1][alice_position[1]] == "R":
+            matrix[alice_position[0] - 1][alice_position[1]] = "*"
+            is_rabbit = True
+            print("Alice didn't make it to the tea party.")
+            return tea_bags, is_collected, is_rabbit == True, is_end
+    else:
+        is_end = True
+        print("Alice didn't make it to the tea party.")
+        return tea_bags, is_collected, is_rabbit, is_end == True
+
+    if tea_bags >= 10:
+        is_collected = True
+        print("She did it! She went to the party.")
+        return tea_bags, is_collected == True, is_rabbit, is_end
+
+    return tea_bags, is_collected, is_rabbit, is_end
+
+n = int(input())
+matrix = []
+alice_position = []
+is_collected = False
+is_rabbit = False
+is_end = False
+tea_bags = 0
+
+for row in range(n):
+    matrix.append(input().split())
+
+for r in range(0,len(matrix)):
+    for c in range(len(matrix)):
+        if matrix[r][c] == "A":
+            alice_position = [r, c]
+            matrix[r][c] = "*"
+            break
+
+while True:
+    command = input()
+    if command == "left":
+        tea_bags, is_collected, is_rabbit, is_end = left(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags)
+        alice_position = [alice_position[0], alice_position[1] - 1]
+        if is_collected == True or is_rabbit == True or is_end == True:
+            break
+    if command == "right":
+        tea_bags, is_collected, is_rabbit, is_end = right(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags)
+        alice_position = [alice_position[0], alice_position[1] + 1]
+        if is_collected == True or is_rabbit == True or is_end == True:
+            break
+    if command == "down":
+        tea_bags, is_collected, is_rabbit, is_end = down(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags)
+        alice_position = [alice_position[0] + 1, alice_position[1]]
+        if is_collected == True or is_rabbit == True or is_end == True:
+            break
+    if command == "up":
+        tea_bags, is_collected, is_rabbit, is_end = up(alice_position, matrix, is_collected, is_rabbit, is_end, tea_bags)
+        alice_position = [alice_position[0] - 1, alice_position[1]]
+        if is_collected == True or is_rabbit == True or is_end == True:
+            break
+for row in range(len(matrix)):
+    for col in range(len(matrix[row])):
+        print(matrix[row][col], end=" ")
+    print()
